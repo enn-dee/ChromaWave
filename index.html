@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="preview"></div>
+        <div class="instruct"><p>Click to copy</p></div>
+      </div>
+      <button onclick="changeGradient()" class="refresh">
+        Change Gradient
+      </button>
+
+      <div class="toast-container" id="toastContainer">
+        <div class="toast" id="toast"></div>
+      </div>
+    </div>
+    <script>
+      const toast = document.getElementById("toast");
+      const prev = document.querySelector(".card");
+      let colorValue = "";
+      prev.addEventListener("click", () => {
+        navigator.clipboard.writeText(colorValue);
+        showToast("Copied to clipboard");
+      });
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.style.opacity = 1;
+
+        setTimeout(() => {
+          toast.style.opacity = 0;
+        }, 5000);
+      }
+
+      function changeGradient() {
+        let rnum1 = Math.floor(Math.random() * 255);
+        let rnum2 = Math.floor(Math.random() * 255);
+        let rnum3 = Math.floor(Math.random() * 255);
+        let opacity = Math.random().toFixed(2);
+
+        colorValue = `linear-gradient( to right,
+        rgba(${rnum1}, ${rnum2}, ${rnum3}, ${opacity}),
+        rgba(${rnum3}, ${rnum2}, ${rnum1}, ${opacity})
+      )`;
+        prev.style.background = colorValue;
+      }
+    </script>
+  </body>
+</html>
